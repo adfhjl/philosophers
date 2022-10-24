@@ -6,13 +6,13 @@
 #    By: vbenneko <vbenneko@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/09/01 13:14:09 by vbenneko      #+#    #+#                  #
-#    Updated: 2022/10/14 13:24:54 by vbenneko      ########   odam.nl          #
+#    Updated: 2022/10/20 15:48:34 by vbenneko      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = philosophers
+NAME = philo
 CC = gcc
-NORMFLAGS = -Wall -Werror -Wextra
+NORMFLAGS = -Wall -Werror -Wextra -g
 CFILES =	\
 	src/main.c	\
 	src/error.c
@@ -22,7 +22,7 @@ INCLUDES = $(addprefix -I, $(sort $(dir $(HEADERS))))
 OBJDIR = obj
 OBJFILES = $(addprefix $(OBJDIR)/,$(CFILES:c=o))
 LIBFT_PATH = libft/libft.a
-LIB_FLAGS = -L $(dir $(LIBFT_PATH)) -l ft
+LIB_FLAGS = -L $(dir $(LIBFT_PATH)) -l ft -l pthread
 
 all: $(NAME)
 

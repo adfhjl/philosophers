@@ -6,7 +6,7 @@
 /*   By: vbenneko <vbenneko@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/14 13:10:56 by vbenneko      #+#    #+#                 */
-/*   Updated: 2022/10/14 17:44:39 by vbenneko      ########   odam.nl         */
+/*   Updated: 2022/10/18 18:37:29 by vbenneko      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,11 @@ t_error	set_error(t_error error)
 int	error_and_exit(t_error error, int exit_status)
 {
 	const char	*arr[] = {
-	[OK] = "Exiting with t_error set to OK\n",
-	[E_INPUT_ARGC] = "philosophers: Expected 4 or 5 arguments\n",
-	[E_INPUT_TYPE] = "philosophers: Expected a whole number\n"
+	[OK] = "",
+	[E_NOMEM] = "philo: Insufficient memory\n",
+	[E_INPUT_ARGC] = "philo: Expected 4 or 5 arguments\n",
+	[E_INPUT_TYPE] = "philo: Expected a natural number\n",
+	[E_THREAD_FAIL] = "philo: Could not create thread for philosopher\n"
 	};
 
 	write(STDERR_FILENO, arr[error], ft_strlen(arr[error]));
