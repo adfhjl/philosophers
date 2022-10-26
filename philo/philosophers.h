@@ -6,7 +6,7 @@
 /*   By: vbenneko <vbenneko@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/14 13:03:58 by vbenneko      #+#    #+#                 */
-/*   Updated: 2022/10/20 15:31:18 by vbenneko      ########   odam.nl         */
+/*   Updated: 2022/10/26 16:26:58 by vbenneko      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 # define SYS_OK 0
 # define LEFT 0
 # define RIGHT 1
-# include <unistd.h> // size_t
-# include <stdbool.h> // bool
-# include <pthread.h> // pthread_mutex_t, pthread_t
-# include <sys/time.h> // struct timeval
+# include <unistd.h>
+# include <stdbool.h>
+# include <pthread.h>
+# include <sys/time.h>
 
 typedef enum e_error
 {
@@ -46,6 +46,7 @@ typedef struct s_philo
 	pthread_t		thread;
 	struct s_data	*data;
 	pthread_mutex_t	*pforks[2];
+	pthread_mutex_t	last_eaten_lock;
 }	t_philo;
 
 typedef struct s_data
@@ -63,30 +64,17 @@ typedef struct s_data
 	struct timeval	starttime;
 	pthread_mutex_t	quit_lock;
 	pthread_mutex_t	print_lock;
+	pthread_mutex_t	start_lock;
 	pthread_mutex_t	n_phils_to_eat_lock;
 	pthread_mutex_t	*forks;
 }	t_data;
 
 //
-// main.c
+// destroy_mutexes.c
 
-t_error	initialize_mutexes(t_data *data);
-t_error	initialize_data(t_data *data, int argc, char *argv[]);
-void	wait_for_philos(t_philo *philos, size_t n_phils);
+void	destroy_general_mutexes(t_data *data);
 void	destroy_forks(t_data *data, size_t n_forks);
-int		main(int argc, char *argv[]);
-void	*thread_func(void *philoptr);
-void	single_philo(t_philo *philo);
-void	philo_sleep(t_philo *philo);
-void	philo_eat(t_philo *philo);
-void	grab_forks(t_philo *philo);
-void	drop_forks(t_philo *philo);
-void	cautious_sleep(size_t t_sleep, t_philo *philo);
-void	init_philo(t_philo *philo, size_t i, t_data *data);
-void	run_philos(t_data *data);
-void	print_action(t_philo *philo, t_action action);
-void	safe_print_action(t_philo *philo, t_action action);
-void	set_quit(bool *quit, pthread_mutex_t *quit_lock, bool state);
+void	destroy_mutexes(t_data *data, size_t n_forks);
 
 //
 // error.c
@@ -94,5 +82,47 @@ void	set_quit(bool *quit, pthread_mutex_t *quit_lock, bool state);
 int		error_and_exit(t_error error, int exit_status);
 t_error	set_error(t_error error);
 t_error	get_error(void);
+
+//
+// ft_atost_strict.c
+
+bool	ft_atost_strict(char *str, size_t *num);
+
+//
+// init_mutexes.c
+
+t_error	initialize_mutexes(t_data *data);
+
+//
+// init_philos
+
+t_error	init_philos(t_data *data);
+
+//
+// monitor_philos.c
+
+void	monitor_philos(t_philo *philos, t_data *data, int argc);
+
+//
+// philo_actions.c
+
+void	philo_sleep(t_philo *philo);
+void	philo_eat(t_philo *philo);
+void	grab_forks(t_philo *philo);
+void	drop_forks(t_philo *philo);
+void	cautious_sleep(size_t t_sleep, t_philo *philo);
+
+//
+// philo_utils.c
+
+void	print_action(t_philo *philo, t_action action);
+void	safe_print_action(t_philo *philo, t_action action);
+void	set_quit(bool *quit, pthread_mutex_t *quit_lock, bool state);
+size_t	convert_ms(struct timeval time);
+
+//
+// thread_func.c
+
+void	*thread_func(void *philoptr);
 
 #endif
