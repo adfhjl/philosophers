@@ -6,7 +6,7 @@
 /*   By: vbenneko <vbenneko@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/26 15:07:33 by vbenneko      #+#    #+#                 */
-/*   Updated: 2022/10/26 15:53:13 by vbenneko      ########   odam.nl         */
+/*   Updated: 2022/10/27 14:19:09 by vbenneko      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ static void	do_philo_loop(t_philo *philo)
 		pthread_mutex_unlock(&philo->data->quit_lock);
 		philo_sleep(philo);
 		safe_print_action(philo, IS_THINKING);
+		if (philo->data->n_phils % 2 == 1)
+			cautious_sleep(200, philo);
 		pthread_mutex_lock(&philo->data->quit_lock);
 		if (philo->data->quit == true)
 			break ;
