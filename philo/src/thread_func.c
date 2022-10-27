@@ -6,7 +6,7 @@
 /*   By: vbenneko <vbenneko@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/26 15:07:33 by vbenneko      #+#    #+#                 */
-/*   Updated: 2022/10/27 14:19:09 by vbenneko      ########   odam.nl         */
+/*   Updated: 2022/10/27 16:50:00 by vbenneko      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static void	single_philo(t_philo *philo)
 	pthread_mutex_lock(philo->pforks[LEFT]);
 	print_action(philo, GRAB_FORK);
 	cautious_sleep(philo->data->t_die + 1, philo);
+	pthread_mutex_unlock(philo->pforks[LEFT]);
 }
 
 void	*thread_func(void *philoptr)
