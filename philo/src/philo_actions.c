@@ -6,7 +6,7 @@
 /*   By: vbenneko <vbenneko@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/26 15:07:27 by vbenneko      #+#    #+#                 */
-/*   Updated: 2022/10/26 15:19:36 by vbenneko      ########   odam.nl         */
+/*   Updated: 2022/10/27 14:16:20 by vbenneko      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 void	philo_sleep(t_philo *philo)
 {
 	safe_print_action(philo, IS_SLEEPING);
-	cautious_sleep(philo->data->t_eat, philo);
+	cautious_sleep(philo->data->t_sleep, philo);
 }
 
 void	philo_eat(t_philo *philo)
