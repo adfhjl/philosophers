@@ -6,7 +6,7 @@
 /*   By: vbenneko <vbenneko@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/26 15:07:25 by vbenneko      #+#    #+#                 */
-/*   Updated: 2022/10/26 15:48:59 by vbenneko      ########   odam.nl         */
+/*   Updated: 2022/12/06 13:01:32 by vbenneko      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	monitor_philos(t_philo *philos, t_data *data, int argc)
 		if (argc == 6)
 			check_well_fed(data);
 		pthread_mutex_lock(&data->quit_lock);
+		usleep(50);
 	}
 	pthread_mutex_unlock(&data->quit_lock);
 }
